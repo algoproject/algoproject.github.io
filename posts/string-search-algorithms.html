@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>String Search Algorithms | Anand</title>
+	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
+	<meta name="keywords" content="Algorithms,Programming,Java">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+</head>
+<body>
+	<div class="wrap">
+		<div class="masthead">
+	        <div class="container">
+	          <h3 class="masthead-title">
+	            <a href="/" title="Home">AlgoProject</a>
+	            <small>Random Algorithm Collection</small>
+	          </h3>
+	        </div>
+	     </div>
+	     <div class="container content">
+	     	<div class="post">
+	     		<h1 class="post-title">String Search Algorithms</h1>
+	     		<span class="post-date">January 10th 2014</span>
+	     		<h2 id="brute-force">Brute Force</h2>
+<p>n  length of string<br>m  length of pattern</p>
+<p>search at all position starting from 0 to n-m.</p>
+<pre class="highlight"><code class="cs"><span class="keyword">void</span> Bf(<span class="keyword">char</span> *x, <span class="keyword">int</span> m, <span class="keyword">char</span> *y, <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> i, j;
+
+    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=n-m;++j) {
+        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m &amp;&amp; x[i] == y[j+i];++i) {
+            <span class="keyword">if</span>(i&gt;=m)
+                <span class="keyword">return</span> j;
+        }
+    }
+}
+
+<span class="comment">// A more efficient implementation</span>
+
+<span class="keyword">void</span> Bf(<span class="keyword">char</span> *x, <span class="keyword">int</span> m, <span class="keyword">char</span> *y, <span class="keyword">int</span> n) {
+    <span class="keyword">char</span> *yb;
+
+    <span class="keyword">for</span>(yb = y; *y != <span class="string">'/0'</span>, yb++) {
+        <span class="keyword">if</span>(memcmp(x, yb, m) == <span class="number">0</span>)
+            <span class="keyword">return</span> y-yb;
+    }
+}</code></pre>
+<h2 id="search-with-automaton">Search with automaton</h2>
+
+	     	</div>
+	     </div>
+	</div>
+    
+</body>
+</html>

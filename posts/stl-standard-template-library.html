@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>STL(Standard Template Library) | Anand</title>
+	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
+	<meta name="keywords" content="Algorithms,Programming,Java">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+</head>
+<body>
+	<div class="wrap">
+		<div class="masthead">
+	        <div class="container">
+	          <h3 class="masthead-title">
+	            <a href="/" title="Home">AlgoProject</a>
+	            <small>Random Algorithm Collection</small>
+	          </h3>
+	        </div>
+	     </div>
+	     <div class="container content">
+	     	<div class="post">
+	     		<h1 class="post-title">STL(Standard Template Library)</h1>
+	     		<span class="post-date">January 9th 2014</span>
+	     		<h2 id="stl-algorithms">STL Algorithms</h2>
+<p>Use <strong>#include<algorithm></strong></p>
+<h3 id="function-objects-and-lambdas">Function objects and lambdas</h3>
+<p>Function objects are also called functors.</p>
+<p>A functor is basically a objects like FunctionObject o but its method o(...) is defined as call of () operator of objects instead of function.</p>
+<h4 id="use-of-functors-in-sorting">Use of functors in sorting</h4>
+<pre class="highlight"><code class="cpp"><span class="keyword">class</span> A {
+    <span class="keyword">public</span>:
+        <span class="keyword">bool</span> <span class="keyword">operator</span>() (<span class="keyword">const</span> obj &amp;a, <span class="keyword">const</span> obj &amp;b) {
+            <span class="keyword">return</span> <span class="comment">// return true if a is less than b</span>
+        }
+};
+
+<span class="keyword">int</span> main() {
+    <span class="stl_container"><span class="built_in">set</span>&lt;<span class="keyword">int</span>, A&gt;</span> x;
+    <span class="comment">// now you can add.</span>
+}</code></pre>
+<p>Advanced usage</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">class</span> MeanValue {
+    <span class="keyword">long</span> num;
+    <span class="keyword">long</span> sum;
+    <span class="keyword">public</span>:
+        MeanValue() : num(<span class="number">0</span>), sum(<span class="number">0</span>) {}
+
+        <span class="keyword">void</span> <span class="keyword">operator</span>() (<span class="keyword">int</span> ele) {
+            ++num;
+            sum += ele;
+        }
+
+        <span class="keyword">double</span> value() {
+            <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt; sum/num;
+        }
+};
+
+<span class="keyword">int</span> main() {
+    <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> col = {<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>};
+    MeanValue mv = for_each(col.begin(), col.end(), MeanValue());
+    <span class="built_in">cout</span> &lt;&lt; mv.value() &lt;&lt; endl;
+}</code></pre>
+<h5 id="to-use-predefined-function-objects">To use predefined function objects</h5>
+<p>use <strong>#include<functional></strong></p>
+<ol>
+<li><strong>negate<type>()</strong> -param</li>
+<li>plus, minus, multiplies, divides, modulus, equal_to, less, greater, not_equal_to</li>
+</ol>
+
+	     	</div>
+	     </div>
+	</div>
+    
+</body>
+</html>
