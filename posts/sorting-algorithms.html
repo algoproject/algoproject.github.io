@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sorting Algorithms | Anand</title>
+	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
+	<meta name="keywords" content="Algorithms,Programming,Java">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"> -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div class="wrap">
+		<div class="masthead">
+	        <div class="container">
+	          <h3 class="masthead-title">
+	            <a href="/" title="Home">AlgoProject</a>
+	            <small>Random Algorithm Collection</small>
+	          </h3>
+	        </div>
+	     </div>
+	     <div class="container content">
+	     	<div class="post">
+	     		<h1 class="post-title">Sorting Algorithms</h1>
+	     		<span class="post-date">January 12th 2014</span>
+	     		<p>The following algorithms have been discussed here.  </p>
+<ol>
+<li>Bubble Sort</li>
+<li>Selection Sort</li>
+</ol>
+<h3 id="bubble-sort">Bubble Sort</h3>
+<p>Worst case complexity is O(n<sup>2</sup>). Remember bubble sort is never faster than insertion sort it is only faster than insertion sort in case array size is 3.</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> bubble_sort (<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> i, j, t;
+    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n-<span class="number">1</span>; ++i) {
+        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n-i-<span class="number">1</span>; ++j) {
+            <span class="keyword">if</span>(a[j+<span class="number">1</span>] &lt; a[j]) {
+                t = a[j];
+                a[j] = a[j+<span class="number">1</span>];
+                a[j+<span class="number">1</span>] = t;
+            }
+        }
+    }
+}</code></pre>
+<p>The problem with above implementation is in every case complexity is O(n<sup>2</sup>). Below is an implementation whose complexity is O(n) in case array is sorted.  </p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> bubble_sort (<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> i, sorted;
+    <span class="keyword">do</span> {
+        sorted = <span class="number">1</span>;
+        --n;
+        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
+        {
+            <span class="keyword">if</span> (a[i] &gt; a[i + <span class="number">1</span>])
+            {
+                  <span class="comment">/* Swap adjacent pair of items. */</span>
+                  <span class="keyword">int</span> t = a[i];
+                  a[i] = a[i + <span class="number">1</span>];
+                  a[i + <span class="number">1</span>] = t;
+                  sorted = <span class="number">0</span>;
+            }
+        }
+    } <span class="keyword">while</span> (!sorted);
+}</code></pre>
+<h3 id="selection-sort">Selection Sort</h3>
+<p>Select the minimum element and put it to it correct position</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> selection_sort(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> i, j, iMin, t;
+    <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n-<span class="number">1</span>; ++j) {
+        iMin = j;
+        <span class="keyword">for</span>(i = j + <span class="number">1</span>; i &lt; n; ++i) {
+            <span class="keyword">if</span>(a[i] &lt; a[iMin])
+                iMin = i;
+        }
+        <span class="keyword">if</span>(iMin != j) {
+            t = a[iMin];
+            a[iMin] = a[j];
+            a[j] = t;
+        }
+    }
+}</code></pre>
+<h3 id="insertion-sort">Insertion Sort</h3>
+
+	     	</div>
+	     </div>
+	</div>
+    
+</body>
+</html>

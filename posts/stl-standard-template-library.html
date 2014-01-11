@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>STL(Standard Template Library) | Anand</title>
+	<title>STL(Standard Template Library) - Part 1 | Anand</title>
 	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
 	<meta name="keywords" content="Algorithms,Programming,Java">
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"> -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<div class="wrap">
@@ -19,53 +20,58 @@
 	     </div>
 	     <div class="container content">
 	     	<div class="post">
-	     		<h1 class="post-title">STL(Standard Template Library)</h1>
+	     		<h1 class="post-title">STL(Standard Template Library) - Part 1</h1>
 	     		<span class="post-date">January 9th 2014</span>
-	     		<h2 id="stl-algorithms">STL Algorithms</h2>
-<p>Use <strong>#include<algorithm></strong></p>
-<h3 id="function-objects-and-lambdas">Function objects and lambdas</h3>
-<p>Function objects are also called functors.</p>
-<p>A functor is basically a objects like FunctionObject o but its method o(...) is defined as call of () operator of objects instead of function.</p>
-<h4 id="use-of-functors-in-sorting">Use of functors in sorting</h4>
-<pre class="highlight"><code class="cpp"><span class="keyword">class</span> A {
-    <span class="keyword">public</span>:
-        <span class="keyword">bool</span> <span class="keyword">operator</span>() (<span class="keyword">const</span> obj &amp;a, <span class="keyword">const</span> obj &amp;b) {
-            <span class="keyword">return</span> <span class="comment">// return true if a is less than b</span>
-        }
-};
-
-<span class="keyword">int</span> main() {
-    <span class="stl_container"><span class="built_in">set</span>&lt;<span class="keyword">int</span>, A&gt;</span> x;
-    <span class="comment">// now you can add.</span>
-}</code></pre>
-<p>Advanced usage</p>
-<pre class="highlight"><code class="cpp"><span class="keyword">class</span> MeanValue {
-    <span class="keyword">long</span> num;
-    <span class="keyword">long</span> sum;
-    <span class="keyword">public</span>:
-        MeanValue() : num(<span class="number">0</span>), sum(<span class="number">0</span>) {}
-
-        <span class="keyword">void</span> <span class="keyword">operator</span>() (<span class="keyword">int</span> ele) {
-            ++num;
-            sum += ele;
-        }
-
-        <span class="keyword">double</span> value() {
-            <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt; sum/num;
-        }
-};
-
-<span class="keyword">int</span> main() {
-    <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> col = {<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>};
-    MeanValue mv = for_each(col.begin(), col.end(), MeanValue());
-    <span class="built_in">cout</span> &lt;&lt; mv.value() &lt;&lt; endl;
-}</code></pre>
-<h5 id="to-use-predefined-function-objects">To use predefined function objects</h5>
-<p>use <strong>#include<functional></strong></p>
+	     		<p>STL or standard template library are set many useful libraries for c++ their main purpose is to make development time fast as many common data structures like stack, list, binary trees as well as some common algorithm like sorting, heaps, hashing are available there. </p>
+<h2 id="containers">Containers</h2>
+<p>As the name indicates a container is collection of objects of same type for eg an int array is a collection of several int&#39;s in the same way there are many different containers available in stl like linked lists, heaps, binary trees, set etc we will explore them one by one.</p>
+<p>There are basically 2 types of containers  </p>
 <ol>
-<li><strong>negate<type>()</strong> -param</li>
-<li>plus, minus, multiplies, divides, modulus, equal_to, less, greater, not_equal_to</li>
+<li>Sequences<ol>
+<li>User controls the order in which elements are inserted in them  </li>
+<li>eg:- vector, list, deque</li>
 </ol>
+</li>
+<li>Associative Containers<ol>
+<li>Here the control of elements is not in user&#39;s control the order is determined by some fixed rules which are different for each container and to access the element we have to use a key.</li>
+<li>eg:- set, multiset, map, multimap</li>
+</ol>
+</li>
+</ol>
+<h3 id="vector">Vector</h3>
+<p>Vectors are simply dynamic arrays as we know to declare an array we have to specify it&#39;s size for eg:- <code>int a[10]</code> declares an array of size 10 <code>int *a = new int[10]</code> creates an array of size 10 at run time but in some cases we don&#39;t know the size of our input int those cases vectors are very useful as they automatically grow in size upon adding elements to them.To use vectors you have to include it by <code>#include&lt;vector&gt;</code></p>
+<p>Here are 3 ways to initialize a vector</p>
+<pre class="highlight"><code class="cpp"><span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> v1;
+<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> v2(x);
+<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> v3(x, <span class="number">1</span>);</code></pre>
+<p>In the first declaration we just declare a vector of int&#39;s, in the second declaration we declare a vector of size x and in third declaration we declare a vector of size x with all it&#39;s elements set to 1 by default.</p>
+<p>First method is used when you don&#39;t know the size of the input here is a program using first method</p>
+<pre class="highlight"><code class="cpp"><span class="preprocessor">#include &lt;vector&gt;</span>
+<span class="preprocessor">#include &lt;cstdio&gt;</span>
+
+<span class="keyword">int</span> main() {
+    <span class="keyword">int</span> i;
+    <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> v;
+    <span class="keyword">while</span>(scanf(<span class="string">"%d"</span>, &amp;i) == <span class="number">1</span>)
+        v.push_back(i);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+<p>Here in the above example we don&#39;t know size of input so we simply declare an empty vector to and an element at the end of vector use <code>push_back()</code>. <code>v.size()</code> will give you the size of the vector then to access individual elements we can simply use <code>v[index]</code> vectors index also start from 0 and go till <code>v.size() - 1</code>.Below is an example the prints an entire vector after reading it.</p>
+<pre class="highlight"><code class="cpp"><span class="preprocessor">#include &lt;vector&gt;</span>
+<span class="preprocessor">#include &lt;cstdio&gt;</span>
+
+<span class="keyword">int</span> main() {
+    <span class="keyword">int</span> i;
+    <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> v;
+    <span class="keyword">while</span>(scanf(<span class="string">"%d"</span>, &amp;i) == <span class="number">1</span>)
+        v.push_back(i);
+    i = <span class="number">0</span>;
+    <span class="keyword">while</span>(i&lt;v.size()-<span class="number">1</span>) 
+        printf(<span class="string">"%d\n"</span>, v[i]);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+<p>Although the method described above is not the best way to print all the elements of vector we will look into a better method by using iterators later.</p>
+<p>So the question is does a vector reallocate it&#39;s memory every time we add an element no when a vector is declared it allocates some fixed amount of memory then keeps on adding element till this is full when this memory gets full it reallocates double the amount of it&#39;s current memory that way it keeps on going.</p>
 
 	     	</div>
 	     </div>

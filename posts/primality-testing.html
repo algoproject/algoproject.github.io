@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Primality Testing | Anand</title>
+	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
+	<meta name="keywords" content="Algorithms,Programming,Java">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"> -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div class="wrap">
+		<div class="masthead">
+	        <div class="container">
+	          <h3 class="masthead-title">
+	            <a href="/" title="Home">AlgoProject</a>
+	            <small>Random Algorithm Collection</small>
+	          </h3>
+	        </div>
+	     </div>
+	     <div class="container content">
+	     	<div class="post">
+	     		<h1 class="post-title">Primality Testing</h1>
+	     		<span class="post-date">January 11th 2014</span>
+	     		<p>Primality testing algorithms check whether a given number n is prime or not.The several methods discussed here are  </p>
+<ol>
+<li>Brute Force</li>
+<li>Fermat Primality Test</li>
+</ol>
+<h3 id="brute-force">Brute Force</h3>
+<p>simply check whether number n is divisible by any number from 2 to sqrt(n). We need to check only upto sqrt(n) and not n/2 as dividing a number by k gives you 2 numbers k and n/k which are factors of n.</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">bool</span> isPrime( <span class="keyword">int</span> n )
+{
+    <span class="keyword">if</span>( n &lt; <span class="number">2</span> ) <span class="keyword">return</span> <span class="keyword">false</span>;
+    <span class="keyword">int</span> sq = <span class="keyword">int</span>( sqrt( n ) );
+    <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= sq; i++ )
+        <span class="keyword">if</span>( !( n % i ) ) <span class="keyword">return</span> <span class="keyword">false</span>;
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}</code></pre>
+<h3 id="modular-exponentation">Modular Exponentation</h3>
+<p>Before we discuss further all the algorithms discussed below would require us to calculate (a^b)mod(c). Here the basic property that <code>(a*b) mod c = ((a mod c)*(b mod c)) mod c</code> will be used.  </p>
+<pre class="highlight"><code class="cpp"><span class="comment">// A simple brute force solution</span>
+<span class="keyword">int</span> modulo(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c) {
+    <span class="keyword">long</span> <span class="keyword">long</span> res = <span class="number">1</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; b; ++i) {
+        res *= a;
+        res %= c;
+    }
+    <span class="keyword">return</span> res%c;
+}</code></pre>
+<p>The above algorithm can be improves further as we know by fast exponentation that <code>if b is even a^b = (a^2)^b/2 and if b is odd a^b = a*(a^b-1)</code> The recursive approach.</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">int</span> modulo(<span class="keyword">int</span> a,<span class="keyword">int</span> b,<span class="keyword">int</span> c){
+    <span class="keyword">long</span> <span class="keyword">long</span> x=<span class="number">1</span>,y=a; <span class="comment">// long long is taken to avoid overflow of intermediate results</span>
+    <span class="keyword">while</span>(b &gt; <span class="number">0</span>){
+        <span class="keyword">if</span>(b%<span class="number">2</span> == <span class="number">1</span>){
+            x=(x*y)%c;
+        }
+        y = (y*y)%c; <span class="comment">// squaring the base</span>
+        b /= <span class="number">2</span>;
+    }
+    <span class="keyword">return</span> x%c;
+}</code></pre>
+<h3 id="fermat-primality-test">Fermat Primality Test</h3>
+<p>It is a probabilistice method to determine whether a given number n is prime or not. According to fermat primality test if p is a prime number and a is positive integer less than p then<br><code>a&lt;sup&gt;p&lt;/sup&gt; = a (mod p)</code> or <code>a&lt;sup&gt;p-1&lt;/sup&gt; = 1 (mod p)</code>  </p>
+<pre class="highlight"><code class="cpp"><span class="keyword">bool</span> fermat(<span class="keyword">long</span> <span class="keyword">long</span> p, <span class="keyword">int</span> iters) {
+    <span class="keyword">if</span>(p == <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; iters; ++i) {
+        <span class="keyword">long</span> <span class="keyword">long</span> a = rand()%(p-<span class="number">1</span>) + <span class="number">1</span>; <span class="comment">// chose a value from a between 1 and p-1</span>
+        <span class="keyword">if</span>(modulo(a, p-<span class="number">1</span>, p) != <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">false</span>
+    }
+    <span class="keyword">return</span> <span class="keyword">true</span>; <span class="comment">// p is probable prime.</span>
+}</code></pre>
+
+	     	</div>
+	     </div>
+	</div>
+    
+</body>
+</html>

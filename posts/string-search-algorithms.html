@@ -5,7 +5,8 @@
 	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
 	<meta name="keywords" content="Algorithms,Programming,Java">
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"> -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<div class="wrap">
@@ -22,30 +23,41 @@
 	     		<h1 class="post-title">String Search Algorithms</h1>
 	     		<span class="post-date">January 10th 2014</span>
 	     		<h2 id="brute-force">Brute Force</h2>
-<p>n  length of string<br>m  length of pattern</p>
-<p>search at all position starting from 0 to n-m.</p>
-<pre class="highlight"><code class="cs"><span class="keyword">void</span> Bf(<span class="keyword">char</span> *x, <span class="keyword">int</span> m, <span class="keyword">char</span> *y, <span class="keyword">int</span> n) {
-    <span class="keyword">int</span> i, j;
-
+<p>if n is length of text and m is length of pattern we have to search at all position starting from 0 to n-m.</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">int</span> Bf(<span class="keyword">const</span> <span class="built_in">string</span> &amp;pattern, <span class="keyword">const</span> <span class="built_in">string</span> &amp;text) {
+    <span class="keyword">int</span> i, j, n = text.length(), m = pattern.length();
     <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=n-m;++j) {
-        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m &amp;&amp; x[i] == y[j+i];++i) {
-            <span class="keyword">if</span>(i&gt;=m)
-                <span class="keyword">return</span> j;
-        }
+        i = <span class="number">0</span>;
+        <span class="keyword">while</span>(i&lt;m &amp;&amp; pattern[i] == text[j+i]) {
+            ++i;
+            <span class="keyword">if</span>(i == m) <span class="keyword">return</span> j;
+        }    
     }
-}
+    <span class="keyword">return</span> -<span class="number">1</span>;
+}</code></pre>
+<h2 id="rabin-karp-algorithm">Rabin Karp Algorithm</h2>
+<p>In this method we use hashing</p>
+<h2 id="kmp-knuth-morris-pratt-algorithm">KMP(Knuth Morris Pratt) Algorithm</h2>
+<ol>
+<li>Preprocessing time O(m)</li>
+<li>Perform <code>2n -1</code> text comparisons in worst case.</li>
+</ol>
+<p>Code to calculate KMP table</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> preKmp(<span class="keyword">const</span> <span class="built_in">string</span> &amp;pattern, <span class="keyword">int</span> KmpTable[]) {
+    <span class="keyword">int</span> m = pattern.length(),i,j;
+    i = <span class="number">0</span>;
+    j = KmpTable[<span class="number">0</span>] = -<span class="number">1</span>;
 
-<span class="comment">// A more efficient implementation</span>
-
-<span class="keyword">void</span> Bf(<span class="keyword">char</span> *x, <span class="keyword">int</span> m, <span class="keyword">char</span> *y, <span class="keyword">int</span> n) {
-    <span class="keyword">char</span> *yb;
-
-    <span class="keyword">for</span>(yb = y; *y != <span class="string">'/0'</span>, yb++) {
-        <span class="keyword">if</span>(memcmp(x, yb, m) == <span class="number">0</span>)
-            <span class="keyword">return</span> y-yb;
+    <span class="keyword">while</span>(i&lt;m) {
+        <span class="keyword">while</span>(j&gt;-<span class="number">1</span> &amp;&amp; pattern[i] != pattern[j])
+            j = KmpTable[j];
+        i++, j++;
+        <span class="keyword">if</span>(pattern[i] == pattern[j])
+            KmpTable[i] = KmpTable[j];
+        <span class="keyword">else</span>
+            KmpTable[i] = j;
     }
 }</code></pre>
-<h2 id="search-with-automaton">Search with automaton</h2>
 
 	     	</div>
 	     </div>

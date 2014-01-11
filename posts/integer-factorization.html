@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>integer Factorization | Anand</title>
+	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
+	<meta name="keywords" content="Algorithms,Programming,Java">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"> -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div class="wrap">
+		<div class="masthead">
+	        <div class="container">
+	          <h3 class="masthead-title">
+	            <a href="/" title="Home">AlgoProject</a>
+	            <small>Random Algorithm Collection</small>
+	          </h3>
+	        </div>
+	     </div>
+	     <div class="container content">
+	     	<div class="post">
+	     		<h1 class="post-title">integer Factorization</h1>
+	     		<span class="post-date">January 12th 2014</span>
+	     		<h3 id="trial-division">Trial Division</h3>
+<p>Simply try all the number from 2 to sqrt(N).</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> factor(<span class="keyword">int</span> n) { 
+    <span class="keyword">int</span> i; 
+    <span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=(<span class="keyword">int</span>)sqrt(n);i++) { 
+     <span class="keyword">while</span>(n % i == <span class="number">0</span>) { 
+       printf(<span class="string">"%d "</span>,i); 
+       n /= i; 
+     } 
+    } 
+    <span class="keyword">if</span> (n &gt; <span class="number">1</span>) printf(<span class="string">"%d"</span>,n); 
+    printf(<span class="string">"\n"</span>); 
+}</code></pre>
+<p>A more improves implementation of above function is</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> factor(<span class="keyword">int</span> n) {
+    <span class="keyword">int</span> sq = (<span class="keyword">int</span>) sqrt((<span class="keyword">double</span>) n );
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i&lt;= sq; ++i) {
+        <span class="keyword">if</span>(n%i == <span class="number">0</span>) { 
+            printf(<span class="string">"%d\n"</span>, i);
+            n /= i--;
+            sq = (<span class="keyword">int</span>) sqrt((<span class="keyword">double</span>) n );
+        }    
+    }
+    <span class="keyword">if</span>(n&gt;<span class="number">1</span>) printf(<span class="string">"%d\n"</span>, n);     
+}</code></pre>
+<h3 id="fermat-factorization-method">Fermat Factorization Method</h3>
+<p>Bases upon representation of odd integer as difference of 2 squares.<br><code>N = a^2 - b^2</code><br>So the obvious thing is it has factors a+b and a-b if none of them is 1 it is called proper factors.In case the number is even you have to keep dividing it by 2 until it becomes odd.</p>
+<p><strong>General Method</strong></p>
+<pre class="highlight"><code class="python"><span class="comment"># try all values of a hoping a^2 - N = b^2 is a perfect square.</span>
+a = ciel(sqrt(N));
+b2 = a*a - N;
+<span class="keyword">while</span> b2 <span class="keyword">is</span> <span class="keyword">not</span> square
+    a++;
+    b2 = a*a - N;
+<span class="keyword">print</span> a-sqrt(b), a+sqrt(b) <span class="comment"># both are the factors.</span></code></pre>
+<p>Also a+sqrt(b) is N&#39;s smallest factor greater than sqrt(N) and a-sqrt(b) is largest factor smaller then sqrt(N).Below is the code in c++  </p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> fermat(<span class="keyword">int</span> n) {
+    <span class="keyword">int</span> a = (<span class="keyword">int</span>) sqrt((<span class="keyword">double</span>) n);
+    <span class="keyword">int</span> b2 = a*a - n;
+    <span class="keyword">while</span>((b2 - sqrt((<span class="keyword">double</span>)b2)*sqrt((<span class="keyword">double</span>)b2)) != <span class="number">0</span>) {
+        a++;
+        b2 = a*a - n;   
+    }
+    <span class="keyword">int</span> f1 = a- sqrt((<span class="keyword">double</span>)b2);
+    <span class="keyword">int</span> f2 = a + sqrt((<span class="keyword">double</span>)b2);
+    printf(<span class="string">"%d\n"</span>, f1);
+    printf(<span class="string">"%d\n"</span>, f2); 
+}</code></pre>
+
+	     	</div>
+	     </div>
+	</div>
+    
+</body>
+</html>
