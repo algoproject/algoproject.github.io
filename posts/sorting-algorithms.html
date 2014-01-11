@@ -26,6 +26,10 @@
 <ol>
 <li>Bubble Sort</li>
 <li>Selection Sort</li>
+<li>Insertion Sort</li>
+<li>Shell Sort</li>
+<li>Quick Sort</li>
+<li>Merge Sort</li>
 </ol>
 <h3 id="bubble-sort">Bubble Sort</h3>
 <p>Worst case complexity is O(n<sup>2</sup>). Remember bubble sort is never faster than insertion sort it is only faster than insertion sort in case array size is 3.</p>
@@ -78,6 +82,110 @@
     }
 }</code></pre>
 <h3 id="insertion-sort">Insertion Sort</h3>
+<p>Insertion sort complexity is also O(n<sup>2</sup>) but is practically more efficient than selection sort.</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> insertion_sort(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> i,j, t;
+    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;n;++i) {
+        <span class="keyword">for</span>(j = i; j &gt; <span class="number">0</span> &amp;&amp; a[j] &lt; a[j-<span class="number">1</span>]; --j) {
+            t = a[j];
+            a[j] = a[j-<span class="number">1</span>];
+            a[j-<span class="number">1</span>] = t;
+        }
+    }
+}</code></pre>
+<p>A more efficient version of the same algorithm is</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> insertion_sort(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> i,j, t;
+    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;n;++i) {
+        t = a[i];
+        <span class="keyword">for</span>(j = i; j &gt; <span class="number">0</span> &amp;&amp; t &lt; a[j-<span class="number">1</span>]; --j) 
+            a[j] = a[j-<span class="number">1</span>];
+        a[j] = t;
+    }
+}</code></pre>
+<h3 id="shell-sort">Shell Sort</h3>
+<p>It is modified insertion sort as we can generalise the fact that is array is almost sorted insertion sort would take O(n) time. Shell sort uses the same conecpt but unlike insertion sort where we compare consecutive elements it compares elements at varying gaps.Here we decide the gap by 3h + 1 method.Average complexity of algorithm is O(n<sup>3/2</sup>) or O(log<sup>2</sup>n).</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> shell_sort(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> i, j, t, h = <span class="number">1</span>;
+    <span class="keyword">while</span>(h &lt; n/<span class="number">3</span>) h = <span class="number">3</span>*h + <span class="number">1</span>; <span class="comment">// vary the size as 1, 4, 13, 40, 121, 364, 1093 ...</span>
+    <span class="keyword">while</span>(h &gt;= <span class="number">1</span>) {
+        <span class="comment">// h sort the array</span>
+        <span class="keyword">for</span>(i = h; i &lt; n; ++i) {
+            t = a[i];
+            <span class="keyword">for</span>(j = i; j &gt;= h &amp;&amp; t &lt; a[j-h]; j-=h)
+                a[j] = a[j-h];
+            a[j] = t;
+        }
+        h /= <span class="number">3</span>;
+    }
+}</code></pre>
+<h3 id="quick-sort">Quick Sort</h3>
+<p>General runtime complexity is O(nlog(n)) and in worst case that is when array is reverse sorted it is O(n<sup>2</sup>).</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">int</span> partition(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right) {
+    <span class="keyword">int</span> pivot = rand()%(right-left+<span class="number">1</span>) + left;
+    <span class="keyword">int</span> lo = left, hi = right;
+
+}
+
+<span class="comment">// initially left should be 0 and right n-1</span>
+<span class="keyword">void</span> quick_sort(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right) {
+    <span class="keyword">if</span>(right &gt;= left) <span class="keyword">return</span>;
+    <span class="keyword">int</span> j = partition(a, left, right);
+    quick_sort(a, left, j-<span class="number">1</span>);
+    quick_sort(a, j+<span class="number">1</span>, right);
+}</code></pre>
+<h3 id="merge-sort">Merge Sort</h3>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> merge(<span class="keyword">int</span> a[], <span class="keyword">int</span> l, <span class="keyword">int</span> m, <span class="keyword">int</span> r, <span class="keyword">int</span> aux[]) {
+    <span class="keyword">int</span> i = l, j = m + <span class="number">1</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> k = l; k &lt;= r; ++k) aux[k-l] = a[k];
+    <span class="keyword">for</span>(<span class="keyword">int</span> k = l; k &lt;= r; ++k ) {
+        <span class="keyword">if</span>(i &gt; m) a[k] = aux[j++ - l];
+        <span class="keyword">else</span> <span class="keyword">if</span>(j &gt; r) a[k] = aux[i++ - l];
+        <span class="keyword">else</span> <span class="keyword">if</span>(aux[i - l] &lt; aux[j - l]) a[k] = aux[i++ - l];
+        <span class="keyword">else</span> a[k] = aux[j++ - l];
+    }
+}
+
+<span class="keyword">void</span> sort_util(<span class="keyword">int</span> a[], <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> aux[]) {
+    <span class="keyword">if</span>(l &lt; r) {
+        <span class="keyword">int</span> m = l + (r-l)/<span class="number">2</span>;
+        sort_util(a, l, m, aux);
+        sort_util(a, m+<span class="number">1</span>, r, aux);
+        merge(a, l, m, r, aux);
+    }
+}
+
+<span class="comment">// call this function. here l is the start index and r is the last index both are inclusive.</span>
+<span class="keyword">void</span> merge_sort(<span class="keyword">int</span> a[], <span class="keyword">int</span> l, <span class="keyword">int</span> r) {
+    <span class="keyword">if</span>(l &lt; r) {
+        <span class="keyword">int</span> *aux = <span class="keyword">new</span> <span class="keyword">int</span>[r-l+<span class="number">1</span>];
+        sort_util(a, l, r, aux);
+    }
+}</code></pre>
+<h3 id="radix-sort-numbers-">Radix Sort(Numbers)</h3>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> radix_sort(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> i, m = a[<span class="number">0</span>], exp = <span class="number">1</span>, base = <span class="number">10</span>;
+    <span class="keyword">int</span> *b = <span class="keyword">new</span> <span class="keyword">int</span>[n];
+    <span class="comment">// find max element in array</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i)
+        <span class="keyword">if</span>(a[i] &gt; m)
+            m = a[i];
+    <span class="keyword">while</span>((m/exp) &gt; <span class="number">0</span>) {
+        <span class="keyword">int</span> bucket[base] = {<span class="number">0</span>};
+        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;++i)
+            bucket[(a[i]/exp)%base]++;
+        <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;base;++i)
+            bucket[i] += bucket[i-<span class="number">1</span>];
+        <span class="keyword">for</span>(i=n-<span class="number">1</span>; i&gt;= <span class="number">0</span>; --i)
+            b[--bucket[(a[i]/exp)%base]] = a[i];
+        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;++i)
+            a[i] = b[i];
+        exp *= base;
+    }
+}</code></pre>
+<h3 id="radix-sort-strings-">Radix Sort(Strings)</h3>
+<pre class="highlight"><code class="cpp">
+</code></pre>
 
 	     	</div>
 	     </div>
