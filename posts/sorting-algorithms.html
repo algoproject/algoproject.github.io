@@ -30,6 +30,7 @@
 <li>Shell Sort</li>
 <li>Quick Sort</li>
 <li>Merge Sort</li>
+<li>Radix Sort(Nnumbers)</li>
 </ol>
 <h3 id="bubble-sort">Bubble Sort</h3>
 <p>Worst case complexity is O(n<sup>2</sup>). Remember bubble sort is never faster than insertion sort it is only faster than insertion sort in case array size is 3.</p>
@@ -121,18 +122,35 @@
 }</code></pre>
 <h3 id="quick-sort">Quick Sort</h3>
 <p>General runtime complexity is O(nlog(n)) and in worst case that is when array is reverse sorted it is O(n<sup>2</sup>).</p>
-<pre class="highlight"><code class="cpp"><span class="keyword">int</span> partition(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right) {
-    <span class="keyword">int</span> pivot = rand()%(right-left+<span class="number">1</span>) + left;
-    <span class="keyword">int</span> lo = left, hi = right;
+<pre class="highlight"><code class="cpp"><span class="keyword">int</span> partition( <span class="keyword">int</span> a[], <span class="keyword">int</span> l, <span class="keyword">int</span> r) {
+   <span class="keyword">int</span> pivot, i, j, t;
+   pivot = a[l]; <span class="comment">// you can also choose a random pivot here we go for simple approach</span>
+   i = l; j = r+<span class="number">1</span>;
 
+   <span class="keyword">while</span>( <span class="number">1</span>)
+   {
+       <span class="keyword">do</span> ++i; <span class="keyword">while</span>( a[i] &lt;= pivot &amp;&amp; i &lt;= r );
+       <span class="keyword">do</span> --j; <span class="keyword">while</span>( a[j] &gt; pivot );
+       <span class="keyword">if</span>( i &gt;= j ) <span class="keyword">break</span>;
+       t = a[i]; a[i] = a[j]; a[j] = t;
+   }
+   t = a[l]; a[l] = a[j]; a[j] = t;
+   <span class="keyword">return</span> j;
 }
 
-<span class="comment">// initially left should be 0 and right n-1</span>
-<span class="keyword">void</span> quick_sort(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right) {
-    <span class="keyword">if</span>(right &gt;= left) <span class="keyword">return</span>;
-    <span class="keyword">int</span> j = partition(a, left, right);
-    quick_sort(a, left, j-<span class="number">1</span>);
-    quick_sort(a, j+<span class="number">1</span>, right);
+
+<span class="keyword">void</span> quickSort( <span class="keyword">int</span> a[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)
+{
+   <span class="keyword">int</span> j;
+
+   <span class="keyword">if</span>( l &lt; r ) 
+   {
+       <span class="comment">// divide and conquer</span>
+        j = partition( a, l, r);
+       quickSort( a, l, j-<span class="number">1</span>);
+       quickSort( a, j+<span class="number">1</span>, r);
+   }
+
 }</code></pre>
 <h3 id="merge-sort">Merge Sort</h3>
 <pre class="highlight"><code class="cpp"><span class="keyword">void</span> merge(<span class="keyword">int</span> a[], <span class="keyword">int</span> l, <span class="keyword">int</span> m, <span class="keyword">int</span> r, <span class="keyword">int</span> aux[]) {
@@ -184,8 +202,7 @@
     }
 }</code></pre>
 <h3 id="radix-sort-strings-">Radix Sort(Strings)</h3>
-<pre class="highlight"><code class="cpp">
-</code></pre>
+<p>Use java</p>
 
 	     	</div>
 	     </div>

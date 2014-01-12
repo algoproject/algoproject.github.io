@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>STL(Standard Template Library) - Part 1 | Anand</title>
+	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
+	<meta name="keywords" content="Algorithms,Programming,Java">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"> -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div class="wrap">
+		<div class="masthead">
+	        <div class="container">
+	          <h3 class="masthead-title">
+	            <a href="/" title="Home">AlgoProject</a>
+	            <small>Random Algorithm Collection</small>
+	          </h3>
+	        </div>
+	     </div>
+	     <div class="container content">
+	     	<div class="post">
+	     		<h1 class="post-title">STL(Standard Template Library) - Part 1</h1>
+	     		<span class="post-date">January 9th 2014</span>
+	     		<h2 id="containers">Containers</h2>
+<h3 id="vector">Vector</h3>
+<ol>
+<li><code>vector&lt;int&gt; a</code> declare a vector a</li>
+<li><code>vector&lt;int&gt; a(n)</code> a vector of size n</li>
+<li><code>vector&lt;int&gt; a(n, x)</code> a vector of size n all elements initialised to x</li>
+<li><code>a[x] or a.at(x)</code> to access element at index x. note all indexs start from 0</li>
+<li>By default all elements of a vector is 0 so if we declare a vector like mentioned in point 2 and try to access any index it would return 0.</li>
+<li><code>a.resize(n)</code> resize vector to size n.</li>
+<li><code>size_t x = a.size()</code> return size of vector a.</li>
+<li><code>a.front() and a.back()</code> return reference to first and last element.</li>
+<li><code>a.clear()</code> is equivalent to <code>a.resize(0)</code>.</li>
+<li>To check if vector is empty use <code>v.empty()</code></li>
+<li><code>v.push_back(i)</code> to add element i to vector v.</li>
+<li><code>vector&lt;int&gt; v1(v2)</code> would copy vector v2 into vector v1.</li>
+<li><code>vector&lt;int&gt; v1(v2.begin(), v2.end())</code> Another way of doing the above.</li>
+<li>Reversing a vector <code>reverse(v.begin(), v.end())</code></li>
+<li>Assigning reverse of a vector to another vector <code>vector v2(v.rbegin(), v.rend())</code></li>
+<li>Data manipulation <code>v.insert(1, 42)</code> insert 42 after the first element that is all element to right of index 1 are first shifted to right by 1. insert method also has interval form that is <code>v.insert(1, all(v2))</code> insert whole vector v2 after index 1.</li>
+<li>Creating a multi-dimensional array of size n x m <code>vector&lt; vector&lt;int&gt; &gt; Mdarray(n, vector&lt;int&gt; (m, -1))</code> Here we have created a matrix of size n x m and initialised all of them to -1.</li>
+<li>Sorting a vector <code>sort(a.begin(), a.end())</code> or <code>sort(&amp;a[0], &amp;a[a.size()])</code></li>
+<li>For custom structs and classes you have to define &lt; operator.</li>
+</ol>
+<pre class="highlight"><code class="cpp"><span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> Mystruct &amp;a, <span class="keyword">const</span> Mystruct &amp;b) {
+    <span class="comment">// return true if a is less than b false if a &gt;= b</span>
+}</code></pre>
+<p>passing vector to function</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> some_function(<span class="keyword">const</span> <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> &amp;v) {
+    <span class="comment">// Always pass by refrence.</span>
+}</code></pre>
+<p>Transversing a vector from start to end</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">for</span>(<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span>::iterator it = v.begin(); it != v.end(); it++) { 
+      *it++; <span class="comment">// Increment the value iterator is pointing to </span>
+ }</code></pre>
+<h3 id="pair">Pair</h3>
+<ol>
+<li>A basic struct containing two elements first and second.</li>
+<li><code>pair&lt;int, int&gt; a = make_pair(2,3)</code> therefore a.first is 2 and a.second is 3.</li>
+</ol>
+<h3 id="string">String</h3>
+<pre class="highlight"><code class="cpp"><span class="built_in">string</span> s = <span class="string">"hello"</span>;
+<span class="built_in">cout</span> &lt;&lt; s.substr(<span class="number">1</span>,<span class="number">3</span>) &lt;&lt; endl; <span class="comment">// output is "el".</span></code></pre>
+<h3 id="set">Set</h3>
+<p>Set has following features</p>
+<ol>
+<li>An element can be added but duplicates not allowed.</li>
+<li>remove element</li>
+<li>get count of elements </li>
+<li>check is element is there in set or not.</li>
+</ol>
+<pre class="highlight"><code class="cpp"><span class="stl_container"><span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;</span> s;
+s.insert(<span class="number">12</span>); <span class="comment">// insert</span>
+s.insert(<span class="number">12</span>); <span class="comment">// does nothing.</span>
+s.erase(<span class="number">12</span>); <span class="comment">// delete 12</span>
+s.size(); <span class="comment">// output is 0.</span>
+<span class="keyword">if</span>(s.find(<span class="number">12</span>) != s.end()) {
+    <span class="comment">// 12 is there in the set.</span>
+}
+<span class="comment">// Another way</span>
+<span class="keyword">if</span>(s.count(<span class="number">12</span>)) {
+    <span class="comment">// 12 is present.</span>
+}
+<span class="comment">// Set has interval constructor</span>
+<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> v;
+<span class="stl_container"><span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;</span> s(v.begin(), v.end());</code></pre>
+<h3 id="maps">Maps</h3>
+<p>Maps are like sets except it contains keys and values.</p>
+<pre class="highlight"><code class="cpp"><span class="stl_container"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;</span> m;
+m[<span class="string">"anand"</span>] = <span class="number">43</span>;
+m[<span class="string">"anant"</span>] = <span class="number">32</span>;
+<span class="keyword">if</span>(m.find(<span class="string">"anand"</span>) != m.end())
+    m.erase(m.find(<span class="string">"anand"</span>));
+<span class="comment">// transversing map with macros</span>
+<span class="keyword">int</span> t = <span class="number">0</span>;
+tr(m, it) {
+    r += it-&gt;second;
+}</code></pre>
+<h3 id="string-streams">String Streams</h3>
+<p>For purpose of input or output we often need to process strings this can be done by stringstreams. C++ provides two stream <code>istringstream and ostringstream</code> use <code>#include&lt;sstream&gt;</code> to use them.</p>
+<pre class="highlight"><code class="cpp"><span class="keyword">void</span> f(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s) {
+    <span class="comment">// to read input from s.</span>
+    <span class="built_in">istringstream</span> is(s);
+    <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> v;
+    <span class="keyword">int</span> tmp;
+    <span class="keyword">while</span>(is &gt;&gt; tmp) v.push_back(tmp);
+}
+<span class="comment">// output string stream sre used for output formatting</span>
+<span class="built_in">string</span> f(<span class="keyword">const</span> <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> &amp;v) {
+    <span class="built_in">ostringstream</span> os;
+    tr(v, it) {
+        os &lt;&lt; <span class="string">' '</span> &lt;&lt; *it;
+    }
+    <span class="built_in">string</span> s = os.str();
+    <span class="keyword">if</span>(!s.empty())
+        s = s.substr(<span class="number">1</span>);
+    <span class="keyword">return</span> s;
+}</code></pre>
+<h2 id="stl-algorithms">STL Algorithms</h2>
+<h3 id="useful-macros">Useful Macros</h3>
+<pre class="highlight"><code class="cpp"><span class="keyword">typedef</span> <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> vi; 
+<span class="keyword">typedef</span> <span class="stl_container"><span class="built_in">vector</span>&lt;vi&gt;</span> vvi; 
+<span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; ii;
+<span class="preprocessor">#define sz(a) int((a).size()) </span>
+<span class="preprocessor">#define all(c) c.begin(), c.end()</span>
+<span class="preprocessor">#define tr(container, it) \</span>
+    <span class="keyword">for</span>(typeof(container.begin()) it = container.begin(); it != container.end(); ++it)
+<span class="comment">// Macro for sets</span>
+<span class="preprocessor">#define present(container, element) (container.find(element) != container.end())</span>
+<span class="preprocessor">#define cpresent(container, element) (find(container.begin(), container.end(), element) != container.end())</span></code></pre>
+<h3 id="find">find</h3>
+<pre class="highlight"><code class="cpp"><span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> v; 
+<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">100</span>; i++) { 
+  v.push_back(i*i); 
+} 
+<span class="comment">// to find an element x in v</span>
+<span class="keyword">if</span>(find(v.begin(), v.end(), x) != v.end()) {
+    <span class="comment">// element found</span>
+}
+<span class="comment">// to get index of element</span>
+<span class="keyword">int</span> i = find(v.begin(), v.end(), x) - v.begin();
+<span class="keyword">if</span>(i &lt; v.size() ) {
+    <span class="comment">// element found with i as index.</span>
+}</code></pre>
+<h3 id="max-and-min-element">Max and Min element</h3>
+<pre class="highlight"><code class="cpp"><span class="keyword">int</span> max = *max_element(v.begin(), v.end());
+<span class="keyword">int</span> iMax = max_element(v.begin(), v.end()) - v.begin(); <span class="comment">// index of max element.</span>
+<span class="keyword">int</span> min = *min_element(v.begin(), v.end());
+<span class="keyword">int</span> iMin = min_element(v.begin(), v.end()) - v.begin();</code></pre>
+<h3 id="sort">Sort</h3>
+<pre class="highlight"><code class="cpp">sort(all(v)); <span class="comment">// sort element in asceneding order</span>
+sort(v.rbegin(), v.rend()); <span class="comment">// sort in descending order</span></code></pre>
+<h3 id="erase">erase</h3>
+<pre class="highlight"><code class="cpp">erase(iterator);
+erase(biterator, enditerator);</code></pre>
+<h3 id="type-problem-in-iterators">Type problem in Iterators</h3>
+<pre class="highlight"><code class="cpp">type(a+b) x = a+b; <span class="comment">//  A valid statement.</span></code></pre>
+
+	     	</div>
+	     </div>
+	</div>
+    
+</body>
+</html>
