@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dynamic Programming</title>
+	<meta name="description" content="This is a simple collection of algorithms and other stuff related to programming."/>
+	<meta name="keywords" content="Algorithms,Programming,Java">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/css/syntax.css">
+	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"> -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div class="wrap">
+		<div class="masthead">
+	        <div class="container">
+	          <h3 class="masthead-title">
+	            <a href="/" title="Home">AlgoProject</a>
+	            <small>Random Algorithm Collection</small>
+	          </h3>
+	        </div>
+	     </div>
+	     <div class="container content">
+	     	<div class="post">
+	     		<h1 class="post-title">Dynamic Programming</h1>
+	     		<span class="post-date">January 13th 2014</span>
+	     		<h2 id="standard-problems">Standard Problems</h2>
+<h3 id="catalan-numbers">Catalan Numbers</h3>
+<blockquote>
+<p>find the number of binary trees which can be created with n diffrent elements.Here we are taking all the nodes in tree.</p>
+</blockquote>
+<p>As with 2 nodes we can create 2, 3 nodes 5 let for n nodes value br C<sub>n</sub>. Here we can think of a recursive solution pick one of the nodes as root suppose the nodes are from 1,2,3...n if we pick i as root this leaves us with i-1 for the left and n-i for the right so C<sub>i-1</sub> diffrent subtrees can be formed on left and C<sub>n-i</sub> subtrees can be formed in right. So for i<sup>th</sup> node C<sub>i-1</sub>*C<sub>n-i</sub> subtrees can be formed therefore net solution would be.</p>
+<p><strong>C<sub>i</sub> = Sum(1,n) (C<sub>i-1</sub>*C<sub>n-i</sub>)</strong></p>
+<pre class="highlight"><code class="cpp"><span class="comment">// A simplebrute force solution</span></code></pre>
+<h3 id="travelling-salesman-problem">Travelling Salesman problem</h3>
+<blockquote>
+<p>Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?  </p>
+</blockquote>
+<p>This problem is a NP hard problem that is there are no polynomial time solutions for this problem.A simple brute force approach would take O(n!) but here we use dynamic programming.Let the set of points be {1,2,3....n} so we start at 1 and after visiting each node exactly once we return back to 1.First step is find <code>cost(i)</code> that is mimimum cost of going from 1 to i for all points except 1.There fore we have to return mimimum of <code>cost(i) + dist(i,1)</code>.</p>
+<h2 id="problems">Problems</h2>
+<h3 id="ugly-numbers">Ugly Numbers</h3>
+<blockquote>
+<p>Ugly numbers are numbers whose only prime factors are 2, 3 or 5. The sequence 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, …shows the first 11 ugly numbers.</p>
+</blockquote>
+<p>To find nth ugly number</p>
+<ol>
+<li>declare an array of size n. with ugly[0] = 1.</li>
+<li>Initialise 3 array index variables i2, i3, i5 for 1st element of ugly array i2 = i3 = i5 = 0</li>
+<li>initialise 3 choices next multiple of 2 <code>a[i2]*2</code> next of 3 <code>a[i3]*3</code> next of 5 <code>a[5]*5</code></li>
+<li>Loop it.<pre class="highlight"><code class="cpp"><span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;n;++i) {
+ next_ugly_no = min(a[i2]*<span class="number">2</span>, a[i3]*<span class="number">3</span>, a[i5]*<span class="number">5</span>);
+ <span class="keyword">if</span>(next_ugly_no == a[i2]*<span class="number">2</span>) ++i2;
+ <span class="keyword">else</span> <span class="keyword">if</span>(next_ugly_no == a[i3]*<span class="number">3</span>) ++i3;
+ <span class="keyword">else</span> ++i5;
+ ugly[i] = next_ugly_no;
+}</code></pre>
+</li>
+</ol>
+
+	     	</div>
+	     </div>
+	</div>
+    
+</body>
+</html>

@@ -1,0 +1,131 @@
+pre code {
+  display: block; padding: 0.5em;
+  background: #F9F9F9;
+  color: #515151;
+}
+
+pre .header,
+pre .decorator,
+pre .annotation {
+  color: #000077;
+}
+
+pre .horizontal_rule,
+pre .link_url,
+pre .emphasis,
+pre .attribute {
+  color: #4f9fcf; /*done*/
+}
+
+pre .emphasis {
+  font-style: italic;
+}
+
+pre .link_label,
+pre .strong,
+pre .value,
+pre .string,
+pre .scss .value .string {
+  color: #CC3300; /*done*/
+}
+
+pre .strong {
+  font-weight: bold;
+}
+
+pre .blockquote,
+pre .comment {
+  color: #999; /*done*/
+}
+
+pre .asciidoc .title,
+pre .function .title {
+  color: #006699;
+}
+
+pre .class, pre .stl_container .built_in, pre .built_in {
+  color: #00AA88; /*done*/
+}
+
+pre .id,
+pre .pseudo,
+pre .constant,
+pre .hexcolor {
+  color: #FF6600; /*done*/
+}
+
+pre .variable {
+  color: #003333; /*done*/
+}
+
+pre .bullet, 
+pre .javadoc {
+  color: #997700;
+}
+
+pre .pi,
+pre .doctype {
+  color: #3344bb;
+}
+
+pre .code,
+pre .number {
+  color: #FF6600; /*done*/
+}
+
+pre .important {
+  color: #f00;
+}
+
+pre .smartquote,
+pre .label {
+  color: #970;
+}
+
+pre .preprocessor,
+pre .pragma {
+  color: #009999; /*done*/
+}
+
+pre .reserved,
+pre .keyword,
+pre .scss .value {
+  color: #007788; /*done*/
+}
+
+pre .regexp {
+  background-color: #fff0ff;
+  color: #880088;
+}
+
+pre .symbol {
+  color: #990073;
+}
+
+pre .symbol .string {
+  color: #a60;
+}
+
+pre .tag {
+  color: #2f6f9f; /*done*/
+}
+
+pre .at_rule,
+pre .at_rule .keyword {
+  color: #088;
+}
+
+pre .at_rule .preprocessor {
+  color: #808;
+}
+
+pre .scss .tag,
+pre .scss .attribute {
+  color: #339;
+}
+
+pre .literal {
+	color: #006699; /*done*/
+}
+
+/*Custom addes rules*/
