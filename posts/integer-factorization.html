@@ -36,7 +36,7 @@
     <span class="keyword">if</span> (n &gt; <span class="number">1</span>) printf(<span class="string">"%d"</span>,n); 
     printf(<span class="string">"\n"</span>); 
 }</code></pre>
-<p>A more improves implementation of above function is</p>
+<p>A more improved implementation of above function is</p>
 <pre class="highlight"><code class="cpp"><span class="keyword">void</span> factor(<span class="keyword">int</span> n) {
     <span class="keyword">int</span> sq = (<span class="keyword">int</span>) sqrt((<span class="keyword">double</span>) n );
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i&lt;= sq; ++i) {
@@ -50,7 +50,7 @@
 }</code></pre>
 <h3 id="fermat-factorization-method">Fermat Factorization Method</h3>
 <p>Bases upon representation of odd integer as difference of 2 squares.<br><code>N = a^2 - b^2</code><br>So the obvious thing is it has factors a+b and a-b if none of them is 1 it is called proper factors.In case the number is even you have to keep dividing it by 2 until it becomes odd.</p>
-<p><strong>General Method</strong></p>
+<p>A rough implementation would be.</p>
 <pre class="highlight"><code class="python"><span class="comment"># try all values of a hoping a^2 - N = b^2 is a perfect square.</span>
 a = ciel(sqrt(N));
 b2 = a*a - N;
@@ -71,6 +71,7 @@ b2 = a*a - N;
     printf(<span class="string">"%d\n"</span>, f1);
     printf(<span class="string">"%d\n"</span>, f2); 
 }</code></pre>
+<h3 id="pollard-rho-factorization">Pollard Rho factorization</h3>
 
 	     	</div>
 	     </div>

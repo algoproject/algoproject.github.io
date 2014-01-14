@@ -22,7 +22,7 @@
 	     <div class="container content">
 	     	<div class="post">
 	     		<h1 class="post-title">String Search Algorithms</h1>
-	     		<span class="post-date">January 10th 2014</span>
+	     		<span class="post-date">January 14th 2014</span>
 	     		<h2 id="brute-force">Brute Force</h2>
 <p>if n is length of text and m is length of pattern we have to search at all position starting from 0 to n-m.</p>
 <pre class="highlight"><code class="cpp"><span class="keyword">int</span> Bf(<span class="keyword">const</span> <span class="built_in">string</span> &amp;pattern, <span class="keyword">const</span> <span class="built_in">string</span> &amp;text) {
@@ -38,48 +38,58 @@
 }</code></pre>
 <h2 id="rabin-karp-algorithm">Rabin Karp Algorithm</h2>
 <p>In this method we use hashing</p>
+<pre class="highlight"><code class="cpp"><span class="comment">// calculate a%b for all cases</span>
+<span class="keyword">int</span> int_mod(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    <span class="keyword">return</span> (a%b + b)%b;
+}
+
+<span class="comment">// calculate a^b mode c</span>
+<span class="keyword">int</span> modulo(<span class="keyword">int</span> a,<span class="keyword">int</span> b,<span class="keyword">int</span> c){
+    <span class="keyword">long</span> <span class="keyword">long</span> x=<span class="number">1</span>,y=a; <span class="comment">// long long is taken to avoid overflow of intermediate results</span>
+    <span class="keyword">while</span>(b &gt; <span class="number">0</span>){
+        <span class="keyword">if</span>(b%<span class="number">2</span> == <span class="number">1</span>){
+            x=(x*y)%c;
+        }
+        y = (y*y)%c; <span class="comment">// squaring the base</span>
+        b /= <span class="number">2</span>;
+    }
+    <span class="keyword">return</span> x%c;
+}
+
+<span class="keyword">int</span> rabin_karp(<span class="keyword">const</span> <span class="built_in">string</span> &amp;pattern,<span class="keyword">const</span> <span class="built_in">string</span> &amp;text) {
+    <span class="keyword">int</span> n = text.length(), m = pattern.length(), hp = <span class="number">0</span>, ht = <span class="number">0</span>, i, B = <span class="number">2</span>, M = <span class="number">7919</span>, e = modulo(B, m-<span class="number">1</span>, M);
+    <span class="keyword">if</span>(n &lt; m) <span class="keyword">return</span> -<span class="number">1</span>;
+    <span class="comment">// calculate hash value of pattern</span>
+    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;++i)
+        hp = int_mod(hp*B + pattern[i], M);
+    <span class="comment">// caluclate hash value of first text.</span>
+    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;++i)
+        ht = int_mod(ht*B + text[i], M);
+    <span class="keyword">if</span>(ht == hp) {
+        <span class="comment">// check character by chracter. herewe are not doing that we are simply returning 0.</span>
+        <span class="keyword">return</span> <span class="number">0</span>;
+    }
+    <span class="comment">// start rolling hash</span>
+    <span class="keyword">for</span>(i=m;i&lt;n;++i) {
+        <span class="comment">// calculate B^(m-1) modulo M</span>
+        ht = int_mod(ht - int_mod(text[i-m]*e, M), M);
+        ht = int_mod(ht*B, M);
+        ht = int_mod(ht + text[i], M);
+        <span class="keyword">if</span>(ht == hp) <span class="comment">// check character by character if you need.</span>
+            <span class="keyword">return</span> i-m+<span class="number">1</span>;
+    }
+    <span class="keyword">return</span> -<span class="number">1</span>;
+}</code></pre>
 <h2 id="kmp-knuth-morris-pratt-algorithm">KMP(Knuth Morris Pratt) Algorithm</h2>
 <ol>
-<li>Preprocessing time O(m)</li>
+<li>Total complexity O(|pattern| + |text|) using O(|pattern|) space</li>
 <li>Perform <code>2n -1</code> text comparisons in worst case.</li>
 </ol>
-<p>Code to calculate KMP table</p>
-<pre class="highlight"><code class="cpp"><span class="keyword">void</span> preKmp(<span class="keyword">const</span> <span class="built_in">string</span> &amp;pattern, <span class="keyword">int</span> KmpTable[]) {
-    <span class="keyword">int</span> m = pattern.length(),i,j;
-    i = <span class="number">0</span>;
-    j = KmpTable[<span class="number">0</span>] = -<span class="number">1</span>;
-
-    <span class="keyword">while</span>(i&lt;m) {
-        <span class="keyword">while</span>(j&gt;-<span class="number">1</span> &amp;&amp; pattern[i] != pattern[j])
-            j = KmpTable[j];
-        i++, j++;
-        <span class="keyword">if</span>(pattern[i] == pattern[j])
-            KmpTable[i] = KmpTable[j];
-        <span class="keyword">else</span>
-            KmpTable[i] = j;
-    }
-}</code></pre>
-<h3 id="xbeta">xbeta</h3>
-<pre class="highlight"><code class="scss"><span class="class">.message</span> {
-  <span class="attribute">border</span><span class="value">: <span class="number">1</span>px solid <span class="hexcolor">#ccc</span>;</span>
-  <span class="attribute">padding</span><span class="value">: <span class="number">10</span>px;</span>
-  <span class="attribute">color</span><span class="value">: <span class="hexcolor">#333</span>;</span>
-}
-
-<span class="class">.success</span> {
-  <span class="at_rule">@<span class="keyword">extend</span><span class="preprocessor"> .message</span>;</span>
-  <span class="attribute">border-color</span><span class="value">: green;</span>
-}
-
-<span class="class">.error</span> {
-  <span class="at_rule">@<span class="keyword">extend</span><span class="preprocessor"> .message</span>;</span>
-  <span class="attribute">border-color</span><span class="value">: red;</span>
-}
-
-<span class="class">.warning</span> {
-  <span class="at_rule">@<span class="keyword">extend</span><span class="preprocessor"> .message</span>;</span>
-  <span class="attribute">border-color</span><span class="value">: yellow;</span>
-}</code></pre>
+<h4 id="references">References</h4>
+<ol>
+<li><a href="http://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm"><a href="http://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm">http://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm</a></a></li>
+<li><a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=stringSearching"><a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=stringSearching">http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=stringSearching</a></a></li>
+</ol>
 
 	     	</div>
 	     </div>
